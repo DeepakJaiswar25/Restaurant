@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Gamer's Grill</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Gamer-Themed Styles */
+        :root {
+            --primary: #2ecc71;
+            --secondary: #3498db;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --danger: #e74c3c;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a2e;
+            color: white;
+            margin: 0;
+            padding: 0;
+            background-image: radial-gradient(circle at 10% 20%, rgba(46, 204, 113, 0.1) 0%, rgba(52, 152, 219, 0.1) 90%);
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(44, 62, 80, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+        
+        h2 {
+            color: var(--primary);
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #bdc3c7;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .payment-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .payment-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .payment-btn.active {
+            border-color: var(--primary);
+            background: rgba(46, 204, 113, 0.1);
+        }
+        
+        .payment-btn.apple { color: white; background: #000; }
+        .payment-btn.google { color: #5f6368; background: white; }
+        .payment-btn.credit { color: white; background: #3a3a3a; }
+        
+        /* Card Form */
+        .card-form {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .card-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #bdc3c7;
+        }
+        
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+        }
+        
+        .row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .row .form-group {
+            flex: 1;
+        }
+        
+        /* Tip Selection */
+        .tip-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        .tip-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .tip-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .tip-btn {
+            flex: 1;
+            min-width: 80px;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .tip-btn:hover {
+            background: rgba(46, 204, 113, 0.2);
+        }
+        
+        .tip-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .custom-tip {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .custom-tip input {
+            flex: 1;
+        }
+        
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .submit-btn:hover {
+            background: #27ae60;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .payment-btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2><i class="fas fa-gamepad"></i> Gamer's Grill</h2>
+        <p class="subtitle">Complete your power-up purchase</p>
+        
+        <!-- Payment Method Selection -->
+        <div class="payment-methods">
+            <button class="payment-btn apple active" onclick="showPaymentMethod('apple')">
+                <i class="fab fa-apple-pay"></i> Apple Pay
+            </button>
+            <button class="payment-btn google" onclick="showPaymentMethod('google')">
+                <i class="fab fa-google-pay"></i> Google Pay
+            </button>
+            <button class="payment-btn credit" onclick="showPaymentMethod('card')">
+                <i class="far fa-credit-card"></i> Card
+            </button>
+        </div>
+        
+        <!-- Credit Card Form (Hidden by default) -->
+        <div id="cardForm" class="card-form">
+            <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+            </div>
+            
+            <div class="row">
+                <div class="form-group">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="text" id="expiryDate" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" placeholder="123" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="cardName">Name on Card</label>
+                <input type="text" id="cardName" placeholder="Your Name" required>
+            </div>
+        </div>
+        
+        <!-- Tip Selection -->
+        <div class="tip-section">
+            <div class="tip-title">Add Power-Up Tip <i class="fas fa-bolt"></i></div>
+            <div class="tip-options">
+                <button class="tip-btn" onclick="selectTip(5)">5%</button>
+                <button class="tip-btn" onclick="selectTip(10)">10%</button>
+                <button class="tip-btn active" onclick="selectTip(15)">15%</button>
+                <button class="tip-btn" onclick="selectTip(20)">20%</button>
+            </div>
+            <div class="custom-tip">
+                <input type="number" id="customTip" placeholder="Custom amount ($)">
+                <button class="tip-btn" onclick="applyCustomTip()">Apply</button>
+            </div>
+        </div>
+        
+        <!-- Order Summary -->
+        <div class="tip-section">
+            <div class="tip-title">Order Summary <i class="fas fa-scroll"></i></div>
+            <div style="margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Tip (<span id="tipPercent">15</span>%):</span>
+                    <span id="tipAmount">$0.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-weight: bold; margin-top: 0.5rem;">
+                    <span>Total:</span>
+                    <span id="totalAmount">$0.00</span>
+                </div>
+            </div>
+        </div>
+        
+        <button class="submit-btn" onclick="processPayment()">
+            Confirm Payment <i class="fas fa-lock"></i>
+        </button>
+    </div>
+
+    <script>
+        // Current tip percentage (default 15%)
+        let currentTip = 15;
+        let subtotal = 0; // This would come from your cart system
+        
+        // Load order total from localStorage or calculate from cart
+        window.addEventListener('DOMContentLoaded', () => {
+            // For demo purposes, we'll use a fixed amount
+            // In your real app, calculate from the cart
+            subtotal = 42.50; // Example amount
+            updateOrderSummary();
+        });
+        
+        function showPaymentMethod(method) {
+            // Update active button
+            document.querySelectorAll('.payment-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Show appropriate form
+            document.getElementById('cardForm').classList.remove('active');
+            
+            if (method === 'card') {
+                document.getElementById('cardForm').classList.add('active');
+            }
+            // In a real app, you'd handle Apple/Google Pay initialization here
+        }
+        
+        function selectTip(percent) {
+            currentTip = percent;
+            
+            // Update active tip button
+            document.querySelectorAll('.tip-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update order summary
+            updateOrderSummary();
+        }
+        
+        function applyCustomTip() {
+            const customTip = parseFloat(document.getElementById('customTip').value);
+            if (!isNaN(customTip) && customTip > 0) {
+                // Convert dollar amount to percentage
+                currentTip = Math.round((customTip / subtotal) * 100);
+                document.getElementById('tipPercent').textContent = currentTip;
+                updateOrderSummary();
+            }
+        }
+        
+        function updateOrderSummary() {
+            const tipAmount = subtotal * (currentTip / 100);
+            const total = subtotal + tipAmount;
+            
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('tipPercent').textContent = currentTip;
+            document.getElementById('tipAmount').textContent = `$${tipAmount.toFixed(2)}`;
+            document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+        }
+        
+        function processPayment() {
+            // Validate form if credit card is selected
+            if (document.querySelector('.payment-btn.credit').classList.contains('active')) {
+                const cardNumber = document.getElementById('cardNumber').value;
+                const expiryDate = document.getElementById('expiryDate').value;
+                const cvv = document.getElementById('cvv').value;
+                
+                if (!cardNumber || !expiryDate || !cvv) {
+                    alert('Please complete all card details');
+                    return;
+                }
+            }
+            
+            // Process payment (this would call your payment API in a real app)
+            alert(`Payment successful! Thank you for your $${(subtotal * (currentTip/100)).toFixed(2)} tip!`);
+            
+            // In your real app, you would:
+            // 1. Send payment to your processor
+            // 2. On success, redirect to confirmation page
+            // 3. Clear the cart
+        }
+    </script>
+</body>
+</html>

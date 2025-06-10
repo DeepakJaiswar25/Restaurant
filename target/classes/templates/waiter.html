@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Over Grill - Table Selection</title>
+    <link rel="stylesheet" href="/css/waiter.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+           <div >	
+              <button class="logout-btn" onclick="window.location.href='/'">Logout</button>
+            </div>
+            <h1>Waiter's Dashboard</h1>
+          
+            <p class="description">Select your battlefield table, warrior!</p>
+            <div class="pixel-corners"></div>
+        </header>
+
+        <section id="tableSection" class="table-buttons">
+            <h2><span class="pixel-icon">🎮</span> TABLE SELECTION <span class="pixel-icon">🍔</span></h2>
+            
+            <div class="button-layout">
+                <button class="table-btn" data-id="1">
+                    <span class="table-number">T1</span>
+                    <span class="table-size">(1-2 Capacity)</span>
+                </button>
+                <button class="table-btn" data-id="2">
+                    <span class="table-number">T2</span>
+                    <span class="table-size">(1-2 Capacity)</span>
+                </button>
+                <button class="table-btn" data-id="3">
+                    <span class="table-number">T3</span>
+                    <span class="table-size">(1-2 Capacity)</span>
+                </button>
+                <button class="table-btn" data-id="4">
+                    <span class="table-number">T4</span>
+                    <span class="table-size">(3-4 Capacity)</span>
+                </button>
+                <button class="table-btn" data-id="5">
+                    <span class="table-number">T5</span>
+                    <span class="table-size">(3-4 Capacity)</span>
+                </button>
+                <button class="table-btn" data-id="6">
+                    <span class="table-number">T6</span>
+                    <span class="table-size">(3-4 Capacity)</span>
+                </button>
+                <button class="table-btn" data-id="7">
+                    <span class="table-number">T7</span>
+                    <span class="table-size">(5-6 Capacity)</span>
+                </button>
+                <button class="table-btn" data-id="8">
+                    <span class="table-number">T8</span>
+                    <span class="table-size">(5-6 Capacity)</span>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <script src="/js/waiter.js"></script>
+</body>
+</html>

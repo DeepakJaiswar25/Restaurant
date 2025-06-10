@@ -1,0 +1,75 @@
+/* Status Colors */
+.status-pending {
+    background-color: #ffe8e8;
+    color: #dc3545;
+}
+
+.status-in-progress {
+    background-color: #fff3cd;
+    color: #ffc107;
+}
+
+.status-done {
+    background-color: #e8f5e9;
+    color: #28a745;
+}
+
+/* Priority Indicators */
+.priority-0 { border-left: 4px solid #6c757d; }
+.priority-1 { border-left: 4px solid #fd7e14; }
+.priority-2 { border-left: 4px solid #dc3545; }
+
+/* Table Styles */
+.table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Comment Tooltip */
+.comment-cell {
+    position: relative;
+    cursor: pointer;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.comment-cell:hover::after {
+    content: attr(data-full-comment);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background: #333;
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    z-index: 100;
+    width: 300px;
+    white-space: normal;
+}
+
+/* Sound Toggle */
+#sound-toggle.muted {
+    opacity: 0.6;
+}
+
+/* Modal Styles */
+.modal-content {
+    background-color: #f8f9fa;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .table td, .table th {
+        padding: 0.5rem;
+    }
+    
+    .comment-cell:hover::after {
+        width: 200px;
+    }
+}
